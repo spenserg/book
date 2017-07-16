@@ -1,5 +1,5 @@
 
-function is_unique_with_buffer(str) {
+function is_unique_with_buffer(str) { //Problem 1.1.1
   //Determines if a string has all unique characters
   //run time complexity = O(n)
   //space complexity = O(n)
@@ -15,7 +15,7 @@ function is_unique_with_buffer(str) {
   return result;
 }
 
-function is_unique_no_buffer(str) {
+function is_unique_no_buffer(str) { //Problem 1.1.2
   //Determines if a string has all unique characters; no temporary buffer used
   //run time complexity = O(n^2)
   //space complexity = constant
@@ -30,7 +30,7 @@ function is_unique_no_buffer(str) {
   return result;
 }
 
-function is_permut(str1, str2) {
+function is_permut(str1, str2) { //Problem 1.2
   //Determines if one string is a permutation of the other
   //run time complexity = O(n + m)
   //space complexity = O(n + m)
@@ -56,7 +56,7 @@ function is_permut(str1, str2) {
   return true;
 }
 
-function urlify(str, len) {
+function urlify(str, len) { //Problem 1.3
   //Replaces all spaces with "%20"
   //run time complexity = O(n)
   //space complexity = constant
@@ -75,7 +75,7 @@ function urlify(str, len) {
   return str;
 }
 
-function is_palindrome_permut(str) {
+function is_palindrome_permut(str) { //Problem 1.4
   //Determines if a string is a permutation of a palindrome
   //run time complexity = O(n)
   //space complexity = O(n)
@@ -96,7 +96,7 @@ function is_palindrome_permut(str) {
   return (len_no_spaces % 2 == sum);
 }
 
-function one_away(str1, str2) {
+function one_away(str1, str2) { //Problem 1.5
   //Determines if second string is one edit away from the first string
   //run time complexity = O(n)
   //space complexity = constant
@@ -124,7 +124,7 @@ function one_away(str1, str2) {
   return (diffs < 2);
 }
 
-function string_compression(str) {
+function string_compression(str) { //Problem 1.6
   //Basic string compression algorithm
   //run time complexity = O(n)
   //space complexity = O(n)
@@ -144,6 +144,8 @@ function string_compression(str) {
   }
   return (result.length > str.length) ? str : result.join("");
 }
+
+//TESTING
 
 function test(name, result, expected) {
   if (expected != result) {
@@ -168,6 +170,8 @@ test('1.2.3',is_permut('abc','abcz'),false);
 test('1.2.4',is_permut('abc','abc '),false);
 test('1.2.5',is_permut('Abc','abc'),false);
 test('1.2.1',is_permut(' abccc ',' cac bc'),true);
+
+test('1.3.1',urlify('Mr John Smith    '),"Mr%20John%20Smith");
 
 test('1.4.1',is_palindrome_permut('abcba'),true);
 test('1.4.2',is_palindrome_permut('abbba'),true);
