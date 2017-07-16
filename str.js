@@ -1,5 +1,6 @@
 
 function is_unique_with_buffer(str) {
+  //Determines if a string has all unique characters
   //run time complexity = O(n)
   //space complexity = O(n)
   var h = {};
@@ -15,6 +16,7 @@ function is_unique_with_buffer(str) {
 }
 
 function is_unique_no_buffer(str) {
+  //Determines if a string has all unique characters; no temporary buffer used
   //run time complexity = O(n^2)
   //space complexity = constant
   var result = true;
@@ -29,6 +31,7 @@ function is_unique_no_buffer(str) {
 }
 
 function is_permut(str1, str2) {
+  //Determines if one string is a permutation of the other
   //run time complexity = O(n + m)
   //space complexity = O(n + m)
   if (str1.length != str2.length) { return false; }
@@ -54,6 +57,7 @@ function is_permut(str1, str2) {
 }
 
 function urlify(str, len) {
+  //Replaces all spaces with "%20"
   //run time complexity = O(n)
   //space complexity = constant
   var w = str.length - 1;
@@ -72,6 +76,7 @@ function urlify(str, len) {
 }
 
 function is_palindrome_permut(str) {
+  //Determines if a string is a permutation of a palindrome
   //run time complexity = O(n)
   //space complexity = O(n)
   var h = {};
@@ -92,6 +97,7 @@ function is_palindrome_permut(str) {
 }
 
 function one_away(str1, str2) {
+  //Determines if second string is one edit away from the first string
   //run time complexity = O(n)
   //space complexity = constant
   if (Math.abs(str1.length - str2.length) > 1) { return false; }
@@ -116,6 +122,27 @@ function one_away(str1, str2) {
     }
   }
   return (diffs < 2);
+}
+
+function string_compression(str) {
+  //Basic string compression algorithm
+  //run time complexity = O(n)
+  //space complexity = O(n)
+  if (str.length < 2) { return str; }
+  var result = [];
+  var counter = 0;
+  var cur_char = str[0];
+  for (var i = 0; i <= str.length; i++) {
+     if (cur_char != str[i] || i == str.length) {
+      result.push(cur_char);
+      result.push(counter);
+      counter = 1;
+      cur_char = (i == str.length) ? '' : str[i];
+    } else {
+      counter++;
+    }
+  }
+  return (result.length > str.length) ? str : result.join("");
 }
 
 function test(name, result, expected) {
@@ -161,3 +188,7 @@ test('1.5.7',one_away('pales','pale'),true);
 test('1.5.8',one_away('pale','bale'),true);
 test('1.5.9',one_away('pale','bake'),false);
 test('1.5.10',one_away('',' '),true);
+
+test('1.6.1',string_compression('aabcccccaaa'),'a2b1c5a3');
+test('1.6.2',string_compression('abc'),'abc');
+test('1.6.3',string_compression(''),'');
