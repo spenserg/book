@@ -60,19 +60,20 @@ function urlify(str, len) { //Problem 1.3
   //Replaces all spaces with "%20"
   //run time complexity = O(n)
   //space complexity = constant
-  var w = str.length - 1;
+  var arr = new Array(str.length);
+  var w = str.length - 1
   for (var i = len - 1; i > -1; i--) {
     if (str[i] == " ") {
-      str[w] = "0";
-      str[w-1] = "2";
-      str[w-2] = "%";
+      arr[w] = "0";
+      arr[w-1] = "2";
+      arr[w-2] = "%";
       w = w - 2;
     } else {
-      str[w] = str[i];
+      arr[w] = str[i];
     }
     w--;
   }
-  return str;
+  return arr.join("");
 }
 
 function is_palindrome_permut(str) { //Problem 1.4
@@ -125,7 +126,7 @@ function one_away(str1, str2) { //Problem 1.5
 }
 
 function string_compression(str) { //Problem 1.6
-  //Basic string compression algorithm
+  //String compression algorithm
   //run time complexity = O(n)
   //space complexity = O(n)
   if (str.length < 2) { return str; }
@@ -143,6 +144,70 @@ function string_compression(str) { //Problem 1.6
     }
   }
   return (result.length > str.length) ? str : result.join("");
+}
+
+function rotate_matrix(m) {
+  //Rotate NxN matrix 90 degrees clockwise
+  //run time complexity = O(n^2)
+  //space complexity = constant
+  if (!m.length || m.length != m[0].length) { return null; }
+  for (var i = 0; i < (m.length / 2); i++) {
+    for (var j = i; j < m.length - 1 - i; j++) {
+      var tmp = m[i][j];
+      m[i][j] = m[m.length - 2 * i - j - 1][i];
+      m[m.length - 2 * i - j - 1][i] = m[m.length - i - 1][m.length - j - 1];
+      m[m.length - i - 1][m.length - j - 1] = m[j][m.length - i - 1];
+      m[j][m.length - i - 1] = tmp;
+    }
+  }
+  return m;
+}
+
+function zero_matrix(m) {
+  //If a cell is zero, set entire row and column to zero
+  //run time complexity = O(n^2)
+  //space complexity = constant
+  for (var i = 0; i < m.length; i++) {
+    for (var j = 0; j < m[i].length; j++) {
+      if (m[i][j] == 0) {
+        m[i][0] = 0;
+        m[0][j] = 0;
+      }
+    }
+  }
+  for (var i = 0; i < m.length; i++) {
+    if (m[i][0] == 0) {
+      for (var k = 1; k < m.length; k++) {
+        m[i][k] = 0;
+      }
+    }
+    if (m[0][i] == 0) {
+      for (var k = 1; k < m.length; k++) {
+        m[k][i] = 0;
+      }
+    }
+  }
+  return m;
+}
+
+function string_rotation(str1, str2) {
+  //Detect if one string is a rotation of the other
+  //run time complexity = O(n)
+  //space complexity = constant
+  if (str1.length != str2.length || str1 == "") { return false; }
+  return is_substring(str1 + str1, str2);
+}
+
+function is_substring(big_str, small_str) {
+  if (small_str.length > big_str) { return false; }
+  var cur_index = 0;
+  for (var i = 0; i < big_str.length; i++) {
+    cur_index = (big_str[i] == small_str[cur_index]) ? cur_index + 1 : 0;
+    if (cur_index >= small_str.length) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //TESTING
@@ -171,7 +236,7 @@ test('1.2.4',is_permut('abc','abc '),false);
 test('1.2.5',is_permut('Abc','abc'),false);
 test('1.2.1',is_permut(' abccc ',' cac bc'),true);
 
-test('1.3.1',urlify('Mr John Smith    '),"Mr%20John%20Smith");
+test('1.3.1',urlify('Mr John Smith    ', 13),"Mr%20John%20Smith");
 
 test('1.4.1',is_palindrome_permut('abcba'),true);
 test('1.4.2',is_palindrome_permut('abbba'),true);
@@ -196,3 +261,7 @@ test('1.5.10',one_away('',' '),true);
 test('1.6.1',string_compression('aabcccccaaa'),'a2b1c5a3');
 test('1.6.2',string_compression('abc'),'abc');
 test('1.6.3',string_compression(''),'');
+
+test('1.9.1',string_rotation('waterbottle','erbottlewat'),true);
+test('1.9.1',string_rotation('waterbottle','erboggywato'),false);
+
